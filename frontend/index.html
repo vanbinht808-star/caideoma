@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YOLO Camera</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="camera-layout">
+    <section class="camera-panel">
+      <video id="camera" autoplay playsinline muted></video>
+    </section>
+
+    <section class="pose-panel">
+      <canvas id="poseCanvas" width="640" height="640"></canvas>
+    </section>
+
+    <div class="controls">
+      <button id="toggleCamera" type="button">Bật camera</button>
+      <label for="delay">Độ trễ</label>
+      <select id="delay">
+        <option value="0">0s</option>
+        <option value="0.1">0,1s</option>
+        <option value="0.25">0,25s</option>
+      </select>
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

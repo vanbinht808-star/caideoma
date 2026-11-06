@@ -1,0 +1,102 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  font-family: "Segoe UI", sans-serif;
+  background: #111827;
+  color: white;
+}
+
+.camera-layout {
+  width: min(96vw, 1120px);
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+  grid-template-areas:
+    "camera pose"
+    "controls controls";
+  gap: 12px;
+}
+
+.camera-panel {
+  grid-area: camera;
+  min-width: 0;
+}
+
+.pose-panel {
+  grid-area: pose;
+}
+
+#camera {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  transform: scaleX(-1);
+  background: #05070a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+}
+
+#poseCanvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  background: #05070a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+}
+
+.controls {
+  grid-area: controls;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+button, select {
+  min-height: 42px;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+button {
+  min-width: 140px;
+  padding: 8px 16px;
+  border: 0;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+select {
+  padding: 6px 10px;
+  background: #1e293b;
+  color: white;
+}
+
+@media (max-width: 760px) {
+  .camera-layout {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "camera"
+      "pose"
+      "controls";
+  }
+
+  .pose-panel {
+    width: min(70vw, 360px);
+    margin-inline: auto;
+  }
+}
