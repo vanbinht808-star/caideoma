@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: yolo26-camera
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn backend.app:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 180
+    healthCheckPath: /api/status
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.12
+      - key: YOLO26_POSE_MODEL
+        value: yolo26n-pose.pt

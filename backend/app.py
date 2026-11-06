@@ -285,4 +285,5 @@ def stream():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=4173, threaded=True, debug=False)
+    port = int(os.getenv("PORT", "4173"))
+    app.run(host="0.0.0.0", port=port, threaded=True, debug=False)
