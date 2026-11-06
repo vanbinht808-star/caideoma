@@ -86,17 +86,128 @@ select {
   color: white;
 }
 
-@media (max-width: 760px) {
+@media (min-width: 761px) and (max-width: 1024px) {
+  body {
+    min-height: 100dvh;
+  }
+
   .camera-layout {
+    width: min(94vw, 900px);
+    grid-template-columns: minmax(0, 1.5fr) minmax(230px, 0.75fr);
+    gap: 10px;
+  }
+
+  .camera-panel,
+  .pose-panel {
+    align-self: center;
+  }
+
+  button {
+    min-width: 130px;
+  }
+}
+
+@media (max-width: 760px) {
+  body {
+    min-height: 100dvh;
+    place-items: start center;
+    padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  }
+
+  .camera-layout {
+    width: 100%;
+    min-height: 100dvh;
     grid-template-columns: 1fr;
     grid-template-areas:
       "camera"
       "pose"
       "controls";
+    align-content: start;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  #camera {
+    aspect-ratio: 4 / 3;
+    max-height: 52dvh;
   }
 
   .pose-panel {
-    width: min(70vw, 360px);
+    width: min(56vw, 280px);
+    max-height: 38dvh;
     margin-inline: auto;
+  }
+
+  .controls {
+    width: 100%;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding-bottom: 4px;
+  }
+
+  button {
+    min-width: 118px;
+    min-height: 44px;
+  }
+
+  button, select {
+    font-size: 15px;
+  }
+
+  select {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 390px) {
+  .camera-layout {
+    padding: 6px;
+  }
+
+  #camera {
+    aspect-ratio: 3 / 4;
+    max-height: 48dvh;
+  }
+
+  .pose-panel {
+    width: min(68vw, 260px);
+  }
+
+  .controls label {
+    display: none;
+  }
+
+  button {
+    flex: 1;
+    max-width: 180px;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  body {
+    place-items: center;
+  }
+
+  .camera-layout {
+    width: min(98vw, 900px);
+    grid-template-columns: minmax(0, 1.45fr) minmax(220px, 0.65fr);
+    grid-template-areas:
+      "camera pose"
+      "controls controls";
+    padding: 6px;
+  }
+
+  #camera {
+    aspect-ratio: 16 / 9;
+    max-height: 76dvh;
+  }
+
+  .pose-panel {
+    width: 100%;
+    max-height: 76dvh;
+  }
+
+  .controls {
+    min-height: 44px;
   }
 }
