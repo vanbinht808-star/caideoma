@@ -21,14 +21,18 @@ except Exception:
     MODEL_NAME = "yolo11n-pose.pt"
     pose_model = YOLO(MODEL_NAME)
 
-hand_options = mp.tasks.vision.HandLandmarkerOptions(
-    base_options=mp.tasks.BaseOptions(model_asset_path=os.path.join(ROOT_DIR, "hand_landmarker.task")),
-    running_mode=mp.tasks.vision.RunningMode.IMAGE,
-    num_hands=2,
-    min_hand_detection_confidence=0.5,
-    min_tracking_confidence=0.5,
-)
-hands = mp.tasks.vision.HandLandmarker.create_from_options(hand_options)
+hands = None
+try:
+    hand_options = mp.tasks.vision.HandLandmarkerOptions(
+        base_options=mp.tasks.BaseOptions(model_asset_path=os.path.join(ROOT_DIR, "hand_landmarker.task")),
+        running_mode=mp.tasks.vision.RunningMode.IMAGE,
+        num_hands=2,
+        min_hand_detection_confidence=0.5,
+        min_tracking_confidence=0.5,
+    )
+    hands = mp.tasks.vision.HandLandmarker.create_from_options(hand_options)
+except Exception as error:
+    print(f"HandLandmarker unavailable: {error}")
 
 camera = None
 camera_lock = threading.Lock()
@@ -102,6 +106,8 @@ def draw_person(frame, result):
 
 
 def draw_hands(frame):
+    if hands is None:
+        return
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
     hand_results = hands.detect(image)
@@ -242,6 +248,9 @@ def analyze():
             })
 
     hands_data = []
+    if hands is None:
+        return jsonify({"width": width, "height": height, "people": people, "hands": []})
+
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
     hand_results = hands.detect(image)
